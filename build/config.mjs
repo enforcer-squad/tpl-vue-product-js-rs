@@ -1,4 +1,4 @@
-const Targets = ['chrome >= 49', 'edge >= 88'];
+const Targets = ['chrome >= 49'];
 
 const Polyfill = {
   mode: 'usage',
@@ -18,7 +18,7 @@ const DevServer = {
   historyApiFallback: {
     disableDotRule: true,
   },
-  host: 'local-ip',
+  host: '0.0.0.0',
   hot: true,
   open: true,
   port: 2333,

@@ -6,7 +6,7 @@ import { VueLoaderPlugin } from 'vue-loader';
 
 import AutoImport from 'unplugin-auto-import/rspack';
 import AutoComponents from 'unplugin-vue-components/rspack';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { ArcoResolver } from 'unplugin-vue-components/resolvers';
 
 import { isProd, resolve, subDir, getCSSModuleRules } from './helper.mjs';
 import { ENV, Polyfill } from './config.mjs';
@@ -40,6 +40,24 @@ const base = defineConfig({
       },
     },
     rules: [
+      {
+        test: /\.[m]js$/,
+        include: [/node_modules/, /floating-ui/],
+        use: [
+          {
+            loader: 'builtin:swc-loader',
+            options: {
+              env: Polyfill,
+              jsc: {
+                parser: {
+                  syntax: 'ecmascript',
+                },
+              },
+            },
+          },
+        ],
+        type: 'javascript/auto',
+      },
       {
         test: /\.vue$/,
         use: [
@@ -85,14 +103,14 @@ const base = defineConfig({
   plugins: [
     AutoImport({
       resolvers: [
-        ElementPlusResolver({
+        ArcoResolver({
           importStyle: 'css',
         }),
       ],
     }),
     AutoComponents({
       resolvers: [
-        ElementPlusResolver({
+        ArcoResolver({
           importStyle: 'css',
         }),
       ],
